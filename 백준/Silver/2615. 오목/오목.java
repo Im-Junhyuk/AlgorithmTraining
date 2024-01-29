@@ -57,17 +57,24 @@ public class Main {
 				x += dx[d];
 				y += dy[d];
 				
-				if(x >= 0 && x < 19 && y >= 0 & y <19) {
-					if (board[x][y] == board[i][j]) {
-						continue;
-					}	else {
-						wasBreak = true;
-						break;
-					}	
-				} else {
+//				if(x >= 0 && x < 19 && y >= 0 & y <19) {
+//					if (board[x][y] == board[i][j]) {
+//						continue;
+//					}	else {
+//						wasBreak = true;
+//						break;
+//					}	
+//				} else {
+//					wasBreak = true;
+//					break;
+//				}
+			
+				
+				if (x < 0 || x >= 19 || y < 0 || y >= 19 || board[x][y] != board[i][j]) {
 					wasBreak = true;
 					break;
-				}
+				} 
+				
 			}
 			
 			x += dx[d];
