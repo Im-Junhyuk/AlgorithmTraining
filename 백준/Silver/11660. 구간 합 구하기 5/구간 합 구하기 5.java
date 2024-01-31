@@ -1,44 +1,65 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
-		int N, M;
+		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringTokenizer st;
+		st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
 		
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
+		StringBuilder sb = new StringBuilder();
 		
-		int[][] intArray = new int[N+1][N+1];
+		int[][] board = new int[n][n];
 		
-		for(int i = 1; i < N+1; i++) {
+		//x가 행이고 y가 열이다.
+		int[][] x_acc = new int[n+1][n];
+		int[][] y_acc = new int[n][n+1];
+		
+		
+		for (int i=0; i<n; i++) {
 			st = new StringTokenizer(br.readLine());
-			for(int j = 1; j < N+1; j++) {
-				intArray[i][j] = Integer.parseInt(st.nextToken());
-				intArray[i][j] = intArray[i][j] + intArray[i-1][j] + intArray[i][j-1] - intArray[i-1][j-1];
+			int acc = 0;
+			for (int j=0; j<n; j++) {
+				board[i][j] = Integer.parseInt(st.nextToken());
+				acc += board[i][j];
+				y_acc[i][j+1] = acc; //열우선
 			}
 		}
 		
-		for(int i = 0; i < M; i++) {
-			int x1, y1, x2, y2;
+		int x1, y1, x2, y2;
+		
+
+		
+		
+		for (int t=0; t<m; t++) {
 			st = new StringTokenizer(br.readLine());
 			x1 = Integer.parseInt(st.nextToken());
 			y1 = Integer.parseInt(st.nextToken());
 			x2 = Integer.parseInt(st.nextToken());
 			y2 = Integer.parseInt(st.nextToken());
 			
-			int result = intArray[x2][y2] - intArray[x2][y1-1] - intArray[x1-1][y2] + intArray[x1-1][y1-1];
-			bw.write(result + "\n");
+			int sum = 0;
+			
+//			for (int x=x1-1; x<=x2-1; x++) {
+//				for (int y=y1-1; y<=y2-1; y++) {
+//					sum += board[x][y];
+//				}
+//			}
+			
+			for (int x=x1-1; x<=x2-1; x++) {
+				sum += y_acc[x][y2]-y_acc[x][y1-1];
+			}
+			
+			sb.append(sum).append("\n");
 		}
 		
-		bw.flush();
+		System.out.println(sb);
 	}
 
 }
