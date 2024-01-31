@@ -1,47 +1,48 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+	static int n, m;
+	static int[] result;
+	static boolean[] visited;
 	
-	static int N;
-	static int M;
-	static int[] temp;
-	
-	static BufferedReader br;
-	static BufferedWriter bw;
-
 	public static void main(String[] args) throws IOException {
-		br = new BufferedReader(new InputStreamReader(System.in));
-		bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		N = Integer.parseInt(st.nextToken());
-		M = Integer.parseInt(st.nextToken());
-		temp = new int[M];
-		
-		combination(1, 0);
-		
-		bw.flush();
-	}
+		// TODO Auto-generated method stub
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(bf.readLine());
 
-	public static void combination(int last, int depth) throws IOException {
-		if(depth == M) {
-			for(int i = 0; i < M; i++) {
-				bw.write(temp[i] + " ");
-			}
-			bw.write("\n");
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		
+		visited = new boolean[n+1];
+		result = new int[m];
+		
+		perm(1, 0);
+		
+	}
+	
+	public static void perm(int start, int cnt) {
+		if (cnt == m) {
+			for (int i: result)
+				System.out.printf("%d ", i);
+			System.out.println();
 			return;
 		}
 		
-		for(int i = last; i <= N; i++) {
-			temp[depth] = i;
-			
-			combination(i+1, depth+1);
+		for (int i=start; i<n+1; i++) {
+			if (!(visited[i])) {
+				result[cnt] = i;
+				visited[i] = true;
+				perm(i+1, cnt+1);
+				visited[i] = false;
+				
+			}
 		}
+		
+		
 	}
+
 }
