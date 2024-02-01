@@ -1,59 +1,48 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
+	static int N, newPrime;
+	static StringBuilder sb;
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int N = sc.nextInt();
+		N = sc.nextInt();
+		sb = new StringBuilder();
 		
-		// init
-		ArrayList<Integer> arr = new ArrayList<>();
-		arr.add(2);
-		arr.add(3);
-		arr.add(5);
-		arr.add(7);
+		amazingPrime(0, 2);
+		amazingPrime(0, 3);
+		amazingPrime(0, 5);
+		amazingPrime(0, 7);
 		
-		// repeat
-		
-		for(int i =1; i < N; i++) {
-			
-		// make candidate
-			arr.replaceAll(v -> v * 10);
-			ArrayList<Integer> newArr = new ArrayList<>();
-		// isPrime
-		// get surviver
-			
-			for(int v : arr) {
-				if(isPrime(v+1))
-					newArr.add(v + 1);
-				if(isPrime(v+3))
-					newArr.add(v + 3);
-				if(isPrime(v+5))
-					newArr.add(v + 5);
-				if(isPrime(v+7))
-					newArr.add(v + 7);
-				if(isPrime(v+9))
-					newArr.add(v + 9);
-			}
-		
-
-			arr = newArr;
-		// go to next
-		
-		}
-		// after repeat, print
-		StringBuilder sb = new StringBuilder();
-		arr.forEach(e -> sb.append(e +"\n"));
 		System.out.println(sb);
 		
 		
 	}
-	static boolean isPrime(int num) {
-		for(int i = 3; i <= Math.sqrt(num); i++) {
-			if(num % i == 0)
-				return false;
+	
+	public static void amazingPrime(int cnt, int prime) {
+		if (cnt == N-1) {
+			sb.append(prime).append("\n");
 		}
+		
+		else {
+			for (int i=1; i<10; i+=2) {
+				newPrime = prime*10 + i;
+				if (isPrime(newPrime)) {
+					amazingPrime(cnt+1, newPrime);
+				}
+			}
+		}
+	}	
+	
+	public static boolean isPrime(int prime) {
+		
+		for (int i=2; i<(Math.sqrt(prime)+1); i++) {
+			if (prime%i == 0) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
 
