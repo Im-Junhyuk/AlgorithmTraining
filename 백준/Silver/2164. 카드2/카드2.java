@@ -7,24 +7,22 @@ import java.util.Queue;
 public class Main {
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		// TODO Auto-generated method stub
-	
-		Queue<Integer> q = new LinkedList<>();
-		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
 		
-
-		for (int i=1; i<=n; i++) { 
+		int N = Integer.parseInt(br.readLine());
+		Queue<Integer> q = new LinkedList<>();
+		for(int i = 1; i < N+1; i++) {
 			q.add(i);
 		}
 		
-		while (q.size() > 1) {
-//			System.out.println(q);
-			q.remove();
-			q.add(q.remove());
+		while(q.size() >1) {
+			int top = q.poll();
+			int sec = q.poll();
+			
+			q.add(sec);
 		}
 		
-		System.out.println(q.peek());
+		System.out.println(q.poll());
 	}
+
 }
