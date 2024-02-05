@@ -22,13 +22,13 @@ public class Main {
 		
 		curNode.next = head;
 		head.pre = curNode;
-		
+		int size = N;
 		curNode = head;
 		StringBuilder sb = new StringBuilder();
 		sb.append("<");
 		
 		while(true) {
-			for(int i = 0; i < K - 1; i++) {
+			for(int i = 0; i < (K - 1)%size; i++) {
 				curNode = curNode.next;
 			}
 			sb.append(curNode.data);
@@ -39,6 +39,7 @@ public class Main {
 			curNode.pre.next = curNode.next;
 			curNode.next.pre = curNode.pre;
 			curNode = curNode.next;
+            size--;
 		}
 		sb.append(">");
 		System.out.println(sb);
