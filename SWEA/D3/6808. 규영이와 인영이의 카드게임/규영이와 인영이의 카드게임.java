@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 
@@ -41,18 +42,39 @@ public class Solution {
 				if(selected[i] == false) 
 					set2[index++] = i;
 			selected2 = new boolean[9];
-			permutation(0);
+//			permutation(0);
+			Arrays.sort(set2);
+			temp = set2;
+			nextPermutation();
 			
 			System.out.println("#" + t + " " + win + " " + loss);
 		}
 	}
+	static void nextPermutation() {
+		while(true) {
+			game();
+			int i = set2.length-1;
+			while(i >= 1 && set2[i-1] > set2[i]) 
+				i--;
+			if(i == 0)
+				return;
+			int j = set2.length-1;
+			while(set2[i-1] >= set2[j])
+				j--;
+			
+			int tem = set2[i-1];
+			set2[i-1] = set2[j];
+			set2[j] = tem;
+			
+			Arrays.sort(set2, i, set2.length);
+			temp = set2;
+		}
+		
+		
+	}
 	static void permutation(int len) {
 		if(len == 9) {
 			game();
-//			for(int i = 0; i < 9; i++) 
-//				System.out.print(temp[i] + " ");
-//				
-//			System.out.println();
 			return;
 		}
 		
