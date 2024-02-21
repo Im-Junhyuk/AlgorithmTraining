@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,9 +44,6 @@ public class Main {
 		int v1Root = find(vertex1);
 		int v2Root = find(vertex2);
 		
-		if (v1Root < v2Root)
-			vertices[v2Root] = v1Root;
-		else 
 			vertices[v1Root] = v2Root;
 	}
 	
