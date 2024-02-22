@@ -1,13 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Solution {
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	static int[] parent;
+	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
@@ -18,10 +18,7 @@ public class Solution {
 			int V = Integer.parseInt(st.nextToken());
 			int E = Integer.parseInt(st.nextToken());
 			
-			ArrayList<Node>[] graph = new ArrayList[V+1];
-			for(int i = 1; i <= V; i++) {
-				graph[i] = new ArrayList<>();
-			}
+			PriorityQueue<Node> pq = new PriorityQueue<>((n1, n2) -> n1.dist-n2.dist);
 			
 			for(int e = 0; e < E; e++) {
 				st = new StringTokenizer(br.readLine());
@@ -29,49 +26,65 @@ public class Solution {
 				int v2 = Integer.parseInt(st.nextToken());
 				int w = Integer.parseInt(st.nextToken());
 				
-				graph[v1].add(new Node(v2, w));
-				graph[v2].add(new Node(v1, w));
+				pq.add(new Node(v1, v2, w));
 			}
 			
-			boolean[] visited = new boolean[V+1];
-			PriorityQueue<Node> pq = new PriorityQueue<>((n1, n2) -> n1.dist-n2.dist);
-			for(Node n : graph[1]) {
-				pq.add(n);
+			int edgeCount = 0;
+			long minDist = 0;
+			parent = new int[V+1];
+			for(int i = 1; i <= V; i++) {
+				parent[i] = i;
 			}
-			visited[1] = true;
-			int nodeCount = 1;
-			long minWeight = 0;
 			
-			while(!pq.isEmpty()) {
+			while(edgeCount < V-1) {
 				Node curNode = pq.poll();
-				if(nodeCount == V)
-					break;
-				if(visited[curNode.dest])
+				
+				int v1 = curNode.v1;
+				int v2 = curNode.v2;
+				int dist = curNode.dist;
+//				System.out.println(v1 + " " + v2 + " " + dist);
+				int parent1 = find(v1);
+				int parent2 = find(v2);
+				if(parent1 == parent2)
 					continue;
 				
-				visited[curNode.dest] = true;
-				minWeight += curNode.dist;
+				union(parent1, parent2);
 				
-				for(Node n : graph[curNode.dest]) {
-					if(visited[n.dest] == false)
-						pq.add(n);
-				}
-				nodeCount++;
+				minDist += dist;
+				edgeCount++;
 			}
+			
 			sb.append("#")
 				.append(t)
 				.append(" ")
-				.append(minWeight)
+				.append(minDist)
 				.append("\n");
 		}
-		System.out.println(sb);
+		System.out.print(sb);
+//		System.out.println(Arrays.toString(parent));
 	}
 	static class Node{
-		int dest;
+		int v1;
+		int v2;
 		int dist;
-		Node(int dest, int dist){
-			this.dest = dest;
+		Node(int v1, int v2, int dist){
+			this.v1 = v1;
+			this.v2 = v2;
 			this.dist = dist;
 		}
+	}
+	
+	static int find(int v) {
+		if(v == parent[v])
+			return v;
+		else
+			return parent[v] = find(parent[v]);
+	}
+	
+	static void union(int v1, int v2) {
+		if(v1 < v2)
+			parent[v2] = v1;
+		else
+			parent[v1] = v2;
 	}
 }
