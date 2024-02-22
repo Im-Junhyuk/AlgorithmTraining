@@ -9,6 +9,7 @@ public class Solution {
 	
 	static int[] parents;
 	static long totalcost;
+	static int islandCount;
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 
@@ -47,6 +48,7 @@ public class Solution {
 				parents[i] = i;
 			}
 			totalcost = 0;
+			islandCount = 0;
 			
 			for(int i = 0; i < edges.size(); i++) {
 				Edge e = edges.get(i);
@@ -58,6 +60,8 @@ public class Solution {
 					union(p1, p2);
 					totalcost += e.dist;
 				}
+				if(islandCount == N-1)
+					break;
 			}
 			
 			sb.append("#")
@@ -92,5 +96,6 @@ public class Solution {
 			parents[v1] = v2;
 		else
 			parents[v2] = v1;
+		islandCount++;
 	}
 }
