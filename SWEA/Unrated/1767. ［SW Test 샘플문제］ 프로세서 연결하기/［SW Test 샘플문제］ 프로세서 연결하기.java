@@ -42,9 +42,9 @@ class Solution
 			}
 			
 			curCore = 0;
-			minLength = 0;
+			minLength = Integer.MAX_VALUE;
 			curLength = 0;
-			maxCore = 0;
+			maxCore = Integer.MIN_VALUE;
 			
 			bt(0);
 			
@@ -74,6 +74,9 @@ class Solution
 				minLength = Math.min(minLength, curLength);
 			return;
 		}
+		
+		if(cores.size() - cur + curCore< maxCore)
+			return;
 		
 		Core curProcessor = cores.get(cur);
 		int x = curProcessor.x;
