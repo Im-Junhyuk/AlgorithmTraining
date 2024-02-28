@@ -51,20 +51,20 @@ public class Main {
 				System.out.println(move);
 				return;
 			}
-				
-			
-			if(visited[x][y][k])
-				continue;
-			
-			visited[x][y][k] = true;
 			
 			for(int d = 0; d < 4; d++) {
 				int newX = x + dxM[d];
 				int newY = y + dyM[d];
 				
+				if(newX == H-1 && newY == W-1) {
+					System.out.println(move+1);
+					return;
+					}
 				if(newX >= 0 && newY >= 0 && newX < H && newY < W 
 						&& map[newX][newY] == 0
 						&& visited[newX][newY][k] == false) {
+						
+					visited[newX][newY][k] = true;
 					q.add(new Monkey(newX, newY, k, move+1));
 				}
 			}
@@ -74,10 +74,17 @@ public class Main {
 					int newX = x + dxK[d];
 					int newY = y + dyK[d];
 					
+					if(newX == H-1 && newY == W-1) {
+						System.out.println(move+1);
+						return;
+						}
+					
 					if(newX >= 0 && newY >= 0 && newX < H && newY < W 
 							&& k < K
 							&& map[newX][newY] == 0
 							&& visited[newX][newY][k+1] == false) {
+
+						visited[newX][newY][k+1] = true;
 						q.add(new Monkey(newX, newY, k+1, move+1));
 					}
 				}
