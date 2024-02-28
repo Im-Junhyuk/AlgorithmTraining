@@ -15,6 +15,14 @@ public class Main {
 		
 		dpTable = new int[30][30];
 		
+		for(int n = 1; n < 30; n++) {
+			for(int k = 0; k <= n; k++) {
+				if(n == k || k == 0)
+					dpTable[n][k] = 1;
+				else
+					dpTable[n][k] = dpTable[n-1][k-1] + dpTable[n-1][k];
+			}
+		}
 		int TC = Integer.parseInt(br.readLine());
 		for(int tc = 0; tc < TC; tc++) {
 			
@@ -22,7 +30,7 @@ public class Main {
 			int N = Integer.parseInt(st.nextToken());
 			int M = Integer.parseInt(st.nextToken());
 			
-			sb.append(dp(M, N))
+			sb.append(dpTable[M][N])
 				.append("\n");
 			
 		}
