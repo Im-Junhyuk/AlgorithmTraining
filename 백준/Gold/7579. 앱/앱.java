@@ -25,22 +25,23 @@ public class Main {
 			C[i] = Integer.parseInt(st.nextToken());
 		}
 		
-		int[][] table = new int[2][M+1];
-		for(int i = 0; i < 2; i++) {
-			for(int j = 0; j <= M; j++) {
-				table[i][j] = 100000001;
-			}
-		}
+		int[][] table = new int[2][10001];
+
 		for(int i = 1; i <= N; i++) {
-			for(int j = 0; j <= M; j++) {
-				if(A[i] >= j)
-					table[i%2][j] = Math.min(C[i], table[(i-1)%2][j]);
+			for(int j = 0; j <= 10000; j++) {
+				if(C[i] <= j)
+					table[i%2][j] = Math.max(table[(i-1)%2][j], table[(i-1)%2][j-C[i]] + A[i]);
 				else
-					table[i%2][j] = Math.min(table[(i-1)%2][j-A[i]] + C[i], table[(i-1)%2][j]);
+					table[i%2][j] = table[(i-1)%2][j];
 			}
 		}
 		
-		System.out.println(table[N%2][M]);
+		for(int i = 0; i < 10001; i++) {
+			if(table[N%2][i] >= M) {
+				System.out.println(i);
+				break;
+			}
+		}
 //		for(int i = 0; i <= N; i ++) {
 //			for(int j = 0; j <= M; j++) {
 //				System.out.print(table[i][j] + " ");
